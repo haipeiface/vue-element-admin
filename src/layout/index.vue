@@ -28,7 +28,7 @@ export default {
     Navbar,
     RightPanel,
     Settings,
-    Sidebar,
+    Sidebar, // 左侧菜单栏el-menu
     TagsView
   },
   mixins: [ResizeMixin],
@@ -40,7 +40,7 @@ export default {
       needTagsView: state => state.settings.tagsView,
       fixedHeader: state => state.settings.fixedHeader
     }),
-    classObj() {
+    classObj() { // :class动态绑定对象，属性值为boolean决定是否启用。
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,

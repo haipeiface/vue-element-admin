@@ -1,5 +1,11 @@
 <template>
   <div v-if="!item.hidden">
+    <!--    parent(0-1) children(0-N)   显示
+               1       0                 p
+               1       1                 c
+               1       2                1p+2c -->
+    <!--    如果只有一个child，（不显示父亲）。-->
+    <!-- 这是隐藏parent分支。只有一个child && (child没有children或者没有showingChildren) && 不是alwaysShow -->
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
@@ -8,6 +14,7 @@
       </app-link>
     </template>
 
+    <!-- 这是显示parent分支  -->
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
@@ -57,7 +64,9 @@ export default {
     return {}
   },
   methods: {
-    hasOneShowingChild(children = [], parent) {
+    // item = route单节点。传入(item.children, item)
+    hasOneShowingChild: function(children = [], parent) {
+      // showingChildren要显示的route节点，过滤掉隐藏的。
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false

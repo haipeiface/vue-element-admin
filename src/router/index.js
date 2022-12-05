@@ -190,6 +190,34 @@ export const asyncRoutes = [
   nestedRouter,
   tableRouter,
 
+  // 购物车练习 https://zhuanlan.zhihu.com/p/341141472
+  {
+    path: '/shopping',
+    component: Layout,
+    redirect: '/shopping/products',
+    name: 'Shopping',
+    meta: {
+      title: 'Shopping', // 左侧菜单栏显示的文字
+      icon: 'shopping'
+    },
+    children: [
+      {
+        path: 'products', // 不加斜杠，url拼上父path按默认显示
+        name: 'products',
+        component: () => import('@/views/products/index'),
+        meta: { title: 'Products' }
+      },
+      {
+        path: 'cart',
+        name: 'cart',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '@/views/cart/index'),
+        meta: { title: 'Cart' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,

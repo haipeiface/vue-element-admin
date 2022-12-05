@@ -5,12 +5,15 @@ const user = require('./user')
 const role = require('./role')
 const article = require('./article')
 const search = require('./remote-search')
+// 购物车
+const product = require('./product')
 
 const mocks = [
   ...user,
   ...role,
   ...article,
-  ...search
+  ...search,
+  ...product
 ]
 
 // for front mock
